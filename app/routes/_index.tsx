@@ -11,6 +11,17 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
+import {Button} from '~/components/shadcn/button';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '~/components/shadcn/dialog';
+import {ModeToggle} from '~/components/shadcn/mode-toggle';
 
 export const meta: Route.MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
@@ -64,6 +75,26 @@ export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="home">
+      {/* shadcn/ui quick demo */}
+      <div className="p-4 flex items-center gap-3">
+        <ModeToggle />
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="default">Open Dialog</Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Welcome</DialogTitle>
+              <DialogDescription>
+                This dialog is powered by Radix + shadcn styles.
+              </DialogDescription>
+            </DialogHeader>
+            <DialogFooter>
+              <Button variant="secondary">Close</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
       <FeaturedCollection collection={data.featuredCollection} />
       <RecommendedProducts products={data.recommendedProducts} />
     </div>

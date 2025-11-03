@@ -13,7 +13,7 @@ import {
 import type {Route} from './+types/root';
 import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
-import resetStyles from '~/styles/reset.css?url';
+import tailwindStyles from '~/styles/tailwind.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
 
@@ -149,7 +149,15 @@ export function Layout({children}: {children?: React.ReactNode}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <link rel="stylesheet" href={resetStyles}></link>
+        {/* Prevent theme flash: set initial theme before hydration */}
+        <script
+          suppressHydrationWarning
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: `(() => {try {const ls = localStorage.getItem('theme'); const mql = window.matchMedia('(prefers-color-scheme: dark)'); const system = mql.matches ? 'dark' : 'light'; const theme = ls || system; const root = document.documentElement; if (theme === 'dark') root.classList.add('dark'); else root.classList.remove('dark');} catch(e) {}})();`,
+          }}
+        />
+        <link rel="stylesheet" href={tailwindStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
         <Links />

@@ -164,7 +164,8 @@ button.reset:hover:not(:has(> *)) {
 */
 .header {
   align-items: center;
-  background: #fff;
+  background: hsl(var(--color-background));
+  color: hsl(var(--color-foreground));
   display: flex;
   height: var(--header-height);
   padding: 0 1rem;
